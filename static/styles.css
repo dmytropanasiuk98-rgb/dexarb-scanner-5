@@ -1445,6 +1445,45 @@ select option {
     font-size: 14px;
 }
 
+/* Glowing Exchange Status LED Dots */
+.ex-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.dot-green {
+    background-color: #2ebd85;
+    box-shadow: 0 0 8px rgba(46, 189, 133, 0.9), 0 0 3px #2ebd85;
+}
+
+.dot-yellow {
+    background-color: #f0b90b;
+    box-shadow: 0 0 8px rgba(240, 185, 11, 0.9), 0 0 3px #f0b90b;
+}
+
+.dot-red {
+    background-color: #f6465d;
+    box-shadow: 0 0 8px rgba(246, 70, 93, 0.9), 0 0 3px #f6465d;
+}
+
+.custom-dropdown-option {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+}
+
+.ex-trigger-content {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
 /* Responsive Mobile Layout (<= 768px) */
 @media (max-width: 768px) {
     html, body {

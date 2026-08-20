@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <title>DEXARB Pro + Alerts</title>
   <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-  <link rel="stylesheet" href="/static/styles.css?v=3800">
+  <link rel="stylesheet" href="/static/styles.css?v=3900">
 </head>
 
 <body>
@@ -16,17 +16,17 @@
         <span class="label-mini green-txt">LONG</span>
         <div class="custom-select-wrapper" id="longExWrapper">
           <div class="custom-select-trigger" id="longExTrigger">
-            <span class="ex-trigger-content"><img id="longExIcon" src="/static/images/ondo.png" class="ex-icon"> <span id="longExText">Ondo Perps</span></span>
+            <span class="ex-trigger-content"><img id="longExIcon" src="/static/images/ondo.png" class="ex-icon"> <span id="longExText">Ondo Perps</span> <span id="longExStatusDot" class="ex-status-dot dot-green" title="Статус роботи"></span></span>
             <svg class="arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
           </div>
           <div class="custom-dropdown-menu" id="longExDropdown">
-            <div class="custom-dropdown-option active" data-value="Ondo"><img src="/static/images/ondo.png" class="ex-icon"> Ondo Perps</div>
-            <div class="custom-dropdown-option" data-value="RH_Lighter"><img src="/static/images/lighter.png" class="ex-icon"> Robinhood Lighter</div>
-            <div class="custom-dropdown-option" data-value="Variational"><img src="/static/images/variational.jpg" class="ex-icon"> Variational Omni</div>
-            <div class="custom-dropdown-option" data-value="Extended"><img src="/static/images/extended.png" class="ex-icon"> Extended DEX</div>
-            <div class="custom-dropdown-option" data-value="Lighter"><img src="/static/images/lighter_dex.png" class="ex-icon"> Lighter DEX</div>
-            <div class="custom-dropdown-option" data-value="RiseX"><img src="/static/images/risex.png" class="ex-icon"> RiseX</div>
-            <div class="custom-dropdown-option" data-value="Bullet"><img src="/static/images/bullet.png" class="ex-icon"> Bullet DEX</div>
+            <div class="custom-dropdown-option active" data-value="Ondo"><img src="/static/images/ondo.png" class="ex-icon"> <span>Ondo Perps</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="RH_Lighter"><img src="/static/images/lighter.png" class="ex-icon"> <span>Robinhood Lighter</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Variational"><img src="/static/images/variational.jpg" class="ex-icon"> <span>Variational Omni</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Extended"><img src="/static/images/extended.png" class="ex-icon"> <span>Extended DEX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Lighter"><img src="/static/images/lighter_dex.png" class="ex-icon"> <span>Lighter DEX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="RiseX"><img src="/static/images/risex.png" class="ex-icon"> <span>RiseX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Bullet"><img src="/static/images/bullet.png" class="ex-icon"> <span>Bullet DEX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
           </div>
           <select id="longEx" style="display:none;">
             <option value="Ondo" selected>Ondo Perps</option>
@@ -46,17 +46,17 @@
         <span class="label-mini red-txt">SHORT</span>
         <div class="custom-select-wrapper" id="shortExWrapper">
           <div class="custom-select-trigger" id="shortExTrigger">
-            <span class="ex-trigger-content"><img id="shortExIcon" src="/static/images/lighter.png" class="ex-icon"> <span id="shortExText">Robinhood Lighter</span></span>
+            <span class="ex-trigger-content"><img id="shortExIcon" src="/static/images/lighter.png" class="ex-icon"> <span id="shortExText">Robinhood Lighter</span> <span id="shortExStatusDot" class="ex-status-dot dot-green" title="Статус роботи"></span></span>
             <svg class="arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
           </div>
           <div class="custom-dropdown-menu" id="shortExDropdown">
-            <div class="custom-dropdown-option" data-value="Ondo"><img src="/static/images/ondo.png" class="ex-icon"> Ondo Perps</div>
-            <div class="custom-dropdown-option active" data-value="RH_Lighter"><img src="/static/images/lighter.png" class="ex-icon"> Robinhood Lighter</div>
-            <div class="custom-dropdown-option" data-value="Variational"><img src="/static/images/variational.jpg" class="ex-icon"> Variational Omni</div>
-            <div class="custom-dropdown-option" data-value="Extended"><img src="/static/images/extended.png" class="ex-icon"> Extended DEX</div>
-            <div class="custom-dropdown-option" data-value="Lighter"><img src="/static/images/lighter_dex.png" class="ex-icon"> Lighter DEX</div>
-            <div class="custom-dropdown-option" data-value="RiseX"><img src="/static/images/risex.png" class="ex-icon"> RiseX</div>
-            <div class="custom-dropdown-option" data-value="Bullet"><img src="/static/images/bullet.png" class="ex-icon"> Bullet DEX</div>
+            <div class="custom-dropdown-option" data-value="Ondo"><img src="/static/images/ondo.png" class="ex-icon"> <span>Ondo Perps</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option active" data-value="RH_Lighter"><img src="/static/images/lighter.png" class="ex-icon"> <span>Robinhood Lighter</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Variational"><img src="/static/images/variational.jpg" class="ex-icon"> <span>Variational Omni</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Extended"><img src="/static/images/extended.png" class="ex-icon"> <span>Extended DEX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Lighter"><img src="/static/images/lighter_dex.png" class="ex-icon"> <span>Lighter DEX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="RiseX"><img src="/static/images/risex.png" class="ex-icon"> <span>RiseX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
+            <div class="custom-dropdown-option" data-value="Bullet"><img src="/static/images/bullet.png" class="ex-icon"> <span>Bullet DEX</span> <span class="ex-status-dot dot-green" title="Працює стабільно"></span></div>
           </div>
           <select id="shortEx" style="display:none;">
             <option value="RH_Lighter" selected>Robinhood Lighter</option>
@@ -186,7 +186,7 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=3800"></script>
+  <script src="/static/app.js?v=3900"></script>
 </body>
 
 </html>

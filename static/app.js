@@ -326,12 +326,72 @@ document.addEventListener("click", (e) => {
     }
 });
 
+let lastExStatus = {};
+
+function updateExchangeStatusUI(statusMap) {
+    if (!statusMap) return;
+    lastExStatus = statusMap;
+
+    const statusTitles = {
+        "ok": "Біржа працює стабільно",
+        "degraded": "Невелика затримка підключення",
+        "offline": "Помилка підключення / Відключено"
+    };
+
+    const statusClasses = {
+        "ok": "dot-green",
+        "degraded": "dot-yellow",
+        "offline": "dot-red"
+    };
+
+    Object.keys(statusMap).forEach(ex => {
+        const st = statusMap[ex] || "offline";
+        const cls = statusClasses[st] || "dot-red";
+        const title = statusTitles[st] || "Помилка / Відключено";
+
+        document.querySelectorAll(`.custom-dropdown-option[data-value="${ex}"] .ex-status-dot`).forEach(dot => {
+            dot.className = `ex-status-dot ${cls}`;
+            dot.title = title;
+        });
+
+        if (state.longEx === ex) {
+            const longDot = $("longExStatusDot");
+            if (longDot) {
+                longDot.className = `ex-status-dot ${cls}`;
+                longDot.title = title;
+            }
+        }
+        if (state.shortEx === ex) {
+            const shortDot = $("shortExStatusDot");
+            if (shortDot) {
+                shortDot.className = `ex-status-dot ${cls}`;
+                shortDot.title = title;
+            }
+        }
+    });
+}
+
+async function fetchExchangesStatus() {
+    try {
+        const r = await fetch('/api/exchanges_status');
+        const d = await r.json();
+        if (d.ok && d.status) {
+            updateExchangeStatusUI(d.status);
+        }
+    } catch (e) {
+        console.error("Fetch exchanges status error:", e);
+    }
+}
+
 async function poll() {
     if (!state.isRunning) return;
     try {
         const r = await fetch(`/api/poll?symbol=${state.symbol}&long_ex=${state.longEx}&short_ex=${state.shortEx}`);
         const data = await r.json();
         if (data.ok) {
+            if (data.exchanges_status) {
+                updateExchangeStatusUI(data.exchanges_status);
+            }
             if ($("inVal")) $("inVal").textContent = (data.entry_pct >= 0 ? '+' : '') + data.entry_pct.toFixed(4) + "%";
             if ($("outVal")) $("outVal").textContent = (data.exit_pct >= 0 ? '+' : '') + data.exit_pct.toFixed(4) + "%";
             if ($("lat")) $("lat").textContent = data.latency_ms;
@@ -1053,12 +1113,14 @@ async function start() {
     initChart();
     initCustomSelects();
     updateTradeButtons();
+    fetchExchangesStatus();
     scan();
     await loadSymbols();
     await loadChartHistory();
 
     setInterval(poll, 500);
     setInterval(scan, 10000);
+    setInterval(fetchExchangesStatus, 3000);
 }
 
 // Header buttons hover & click sounds

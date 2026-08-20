@@ -401,6 +401,7 @@ async def get_price(ex: str, sym: str) -> Tuple[float, float]:
         ask = round(ask / 50.0, 4)
 
     if bid > 0 and ask > 0:
+        mark_exchange_active(ex)
         _price_cache[key] = (bid, ask, now)
         return bid, ask
     
@@ -410,9 +411,42 @@ async def get_price(ex: str, sym: str) -> Tuple[float, float]:
         
     return 0.0, 0.0
 
+_exchange_last_seen: Dict[str, float] = {}
+
+def mark_exchange_active(ex: str):
+    _exchange_last_seen[ex] = time.time()
+
+def get_exchange_health(ex: str) -> str:
+    now = time.time()
+    if ex == "RH_Lighter":
+        if rh_lighter_ws.client and rh_lighter_ws.client.prices: return "ok"
+    elif ex == "Lighter":
+        if lighter_ws.client and lighter_ws.client.order_books: return "ok"
+    elif ex == "Variational":
+        if variational.client and variational.client.prices: return "ok"
+    elif ex == "Extended":
+        if extended_client.client and extended_client.client.prices: return "ok"
+    elif ex == "RiseX":
+        if risex.client and risex.client.prices: return "ok"
+    elif ex == "Bullet":
+        if bullet.client and bullet.client.prices: return "ok"
+
+    last = _exchange_last_seen.get(ex, 0)
+    if last > 0 and (now - last) < 20.0:
+        return "ok"
+    elif last > 0 and (now - last) < 60.0:
+        return "degraded"
+    return "offline"
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
     with open("static/index.html", "r", encoding="utf-8") as f: return f.read()
+
+@app.get("/api/exchanges_status")
+async def api_exchanges_status():
+    all_ex = ["Ondo", "RH_Lighter", "Variational", "Extended", "Lighter", "RiseX", "Bullet"]
+    status = {ex: get_exchange_health(ex) for ex in all_ex}
+    return {"ok": True, "status": status}
 
 @app.get("/api/symbols")
 async def api_symbols():
