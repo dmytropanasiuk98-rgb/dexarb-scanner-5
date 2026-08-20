@@ -1444,3 +1444,161 @@ select option {
     font-weight: 400;
     font-size: 14px;
 }
+
+/* Responsive Mobile Layout (<= 768px) */
+@media (max-width: 768px) {
+    html, body {
+        height: auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+
+    .topbar {
+        height: auto !important;
+        padding: 10px 14px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .topbar .controls {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        justify-content: space-between !important;
+    }
+
+    .ex-group {
+        flex: 1 !important;
+        min-width: 130px !important;
+    }
+
+    .btn-swap {
+        align-self: flex-end !important;
+        margin-bottom: 2px !important;
+    }
+
+    .symbol-search-wrapper {
+        width: 100% !important;
+    }
+
+    .main-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        padding: 10px !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .left-col {
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .right-col {
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .header-info {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .funding-rates-box {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+    }
+
+    .metrics-row {
+        flex-direction: row !important;
+        gap: 8px !important;
+    }
+
+    .metric-box {
+        padding: 8px 10px !important;
+        gap: 8px !important;
+        border-radius: 12px !important;
+    }
+
+    .ex-trade-card-btn {
+        padding: 6px 8px !important;
+        min-width: 70px !important;
+    }
+
+    .ex-trade-card-btn img.big-ex-icon, img.big-ex-icon {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+    }
+
+    .ex-trade-card-btn .ex-card-title {
+        font-size: 9px !important;
+    }
+
+    #chart {
+        height: 300px !important;
+    }
+
+    /* Mobile 2-column grid for Top Spreads */
+    .sidebar-content thead {
+        display: none !important;
+    }
+
+    .sidebar-content tbody#topSpreads {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+
+    .sidebar-content tbody#topSpreads tr {
+        display: flex !important;
+        flex-direction: column !important;
+        background: rgba(18, 24, 38, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        padding: 10px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        box-sizing: border-box !important;
+    }
+
+    .sidebar-content tbody#topSpreads tr td {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        padding: 2px 0 !important;
+        border: none !important;
+        font-size: 11px !important;
+    }
+
+    .sidebar-content tbody#topSpreads tr td:nth-child(1) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        padding-bottom: 6px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .sidebar-content tbody#topSpreads tr td:nth-child(2)::before {
+        content: "Spread:";
+        color: #94a3b8;
+        font-size: 10px;
+    }
+
+    .sidebar-content tbody#topSpreads tr td:nth-child(3)::before {
+        content: "Funding:";
+        color: #94a3b8;
+        font-size: 10px;
+    }
+
+    .sidebar-content tbody#topSpreads tr td:nth-child(4)::before {
+        content: "Net APR:";
+        color: #94a3b8;
+        font-size: 10px;
+    }
+}

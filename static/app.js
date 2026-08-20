@@ -803,12 +803,18 @@ function updateTradeButtons() {
         const longName = EXCHANGE_NAMES[longEx] || longEx;
 
         entryContainer.innerHTML = `
-            <a class="ex-trade-card-btn" href="${longUrl}" target="_blank" title="Перейти на торгівлю ${currentSym} на ${longName}" onclick="if(typeof playTactileClick==='function')playTactileClick();">
+            <a class="ex-trade-card-btn" href="${longUrl}" target="_blank" title="Перейти на торгівлю ${currentSym} на ${longName}">
                 <span class="badge-card-side badge-card-long">LONG</span>
                 <img src="${longIcon}" class="big-ex-icon">
                 <span class="ex-card-title">${longName} ↗</span>
             </a>
         `;
+        const entryBtn = entryContainer.querySelector(".ex-trade-card-btn");
+        if (entryBtn) {
+            entryBtn.onmouseenter = () => playTactileClick();
+            entryBtn.onmousedown = () => playTactileClick();
+            entryBtn.onclick = () => playTactileClick();
+        }
     }
 
     if (exitContainer) {
@@ -817,12 +823,18 @@ function updateTradeButtons() {
         const shortName = EXCHANGE_NAMES[shortEx] || shortEx;
 
         exitContainer.innerHTML = `
-            <a class="ex-trade-card-btn" href="${shortUrl}" target="_blank" title="Перейти на торгівлю ${currentSym} на ${shortName}" onclick="if(typeof playTactileClick==='function')playTactileClick();">
+            <a class="ex-trade-card-btn" href="${shortUrl}" target="_blank" title="Перейти на торгівлю ${currentSym} на ${shortName}">
                 <span class="badge-card-side badge-card-short">SHORT</span>
                 <img src="${shortIcon}" class="big-ex-icon">
                 <span class="ex-card-title">${shortName} ↗</span>
             </a>
         `;
+        const exitBtn = exitContainer.querySelector(".ex-trade-card-btn");
+        if (exitBtn) {
+            exitBtn.onmouseenter = () => playTactileClick();
+            exitBtn.onmousedown = () => playTactileClick();
+            exitBtn.onclick = () => playTactileClick();
+        }
     }
 }
 
