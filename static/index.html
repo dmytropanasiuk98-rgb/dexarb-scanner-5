@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+  <meta charset="utf-8" />
+  <title>DEXARB Pro + Alerts</title>
+  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+  <link rel="stylesheet" href="/static/styles.css?v=2500">
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="logo">DEX<b>ARB</b></div>
+    <div class="controls">
+      <div class="ex-group">
+        <span class="label-mini green-txt">LONG</span>
+        <div class="custom-select-wrapper" id="longExWrapper">
+          <div class="custom-select-trigger" id="longExTrigger">
+            <span class="ex-trigger-content"><img id="longExIcon" src="/static/images/ondo.png" class="ex-icon"> <span id="longExText">Ondo Perps</span></span>
+            <svg class="arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="custom-dropdown-menu" id="longExDropdown">
+            <div class="custom-dropdown-option active" data-value="Ondo"><img src="/static/images/ondo.png" class="ex-icon"> Ondo Perps</div>
+            <div class="custom-dropdown-option" data-value="RH_Lighter"><img src="/static/images/lighter.png" class="ex-icon"> Robinhood Lighter</div>
+            <div class="custom-dropdown-option" data-value="Variational"><img src="/static/images/variational.jpg" class="ex-icon"> Variational Omni</div>
+            <div class="custom-dropdown-option" data-value="Extended"><img src="/static/images/extended.png" class="ex-icon"> Extended DEX</div>
+            <div class="custom-dropdown-option" data-value="Lighter"><img src="/static/images/lighter_dex.png" class="ex-icon"> Lighter DEX</div>
+            <div class="custom-dropdown-option" data-value="RiseX"><img src="/static/images/risex.png" class="ex-icon"> RiseX</div>
+            <div class="custom-dropdown-option" data-value="Bullet"><img src="/static/images/bullet.png" class="ex-icon"> Bullet DEX</div>
+          </div>
+          <select id="longEx" style="display:none;">
+            <option value="Ondo" selected>Ondo Perps</option>
+            <option value="RH_Lighter">Robinhood Lighter</option>
+            <option value="Variational">Variational Omni</option>
+            <option value="Extended">Extended DEX</option>
+            <option value="Lighter">Lighter DEX</option>
+            <option value="RiseX">RiseX</option>
+            <option value="Bullet">Bullet DEX</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="swapExchanges" class="btn-swap" title="Поміняти біржі місцями (Long ⇄ Short)">⇄</button>
+
+      <div class="ex-group">
+        <span class="label-mini red-txt">SHORT</span>
+        <div class="custom-select-wrapper" id="shortExWrapper">
+          <div class="custom-select-trigger" id="shortExTrigger">
+            <span class="ex-trigger-content"><img id="shortExIcon" src="/static/images/lighter.png" class="ex-icon"> <span id="shortExText">Robinhood Lighter</span></span>
+            <svg class="arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="custom-dropdown-menu" id="shortExDropdown">
+            <div class="custom-dropdown-option" data-value="Ondo"><img src="/static/images/ondo.png" class="ex-icon"> Ondo Perps</div>
+            <div class="custom-dropdown-option active" data-value="RH_Lighter"><img src="/static/images/lighter.png" class="ex-icon"> Robinhood Lighter</div>
+            <div class="custom-dropdown-option" data-value="Variational"><img src="/static/images/variational.jpg" class="ex-icon"> Variational Omni</div>
+            <div class="custom-dropdown-option" data-value="Extended"><img src="/static/images/extended.png" class="ex-icon"> Extended DEX</div>
+            <div class="custom-dropdown-option" data-value="Lighter"><img src="/static/images/lighter_dex.png" class="ex-icon"> Lighter DEX</div>
+            <div class="custom-dropdown-option" data-value="RiseX"><img src="/static/images/risex.png" class="ex-icon"> RiseX</div>
+            <div class="custom-dropdown-option" data-value="Bullet"><img src="/static/images/bullet.png" class="ex-icon"> Bullet DEX</div>
+          </div>
+          <select id="shortEx" style="display:none;">
+            <option value="RH_Lighter" selected>Robinhood Lighter</option>
+            <option value="Variational">Variational Omni</option>
+            <option value="Ondo">Ondo Perps</option>
+            <option value="Extended">Extended DEX</option>
+            <option value="Lighter">Lighter DEX</option>
+            <option value="RiseX">RiseX</option>
+            <option value="Bullet">Bullet DEX</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ex-group">
+        <span class="label-mini gray-txt">ПОШУК МОНЕТИ</span>
+        <div class="symbol-search-wrapper">
+          <input type="text" id="symbolSearch" placeholder="Введіть тикер..." autocomplete="off">
+          <div id="symbolDropdown" class="symbol-dropdown"></div>
+        </div>
+      </div>
+    </div>
+    <div class="latency">Ping: <span id="lat">0</span>ms <span class="dot" id="dot"></span></div>
+  </div>
+
+  <div class="main-grid">
+    <div class="left-col card">
+      <div class="header-info">
+        <h1 id="mainTitle">Оберіть пару</h1>
+        <div class="funding-rates-box" style="display: flex; align-items: center; gap: 8px; font-size: 13px; background: #151921; padding: 4px 10px; border-radius: 6px; border: 1px solid #2b2f36;">
+          <span style="color: #888;">Funding:</span>
+          <span><span id="longExName" style="color: #2ebd85;">Ondo</span>: <b id="longFundingVal" style="color: #2ebd85;">0.0000%</b></span>
+          <span style="color: #444;">|</span>
+          <span><span id="shortExName" style="color: #f6465d;">RH_Lighter</span>: <b id="shortFundingVal" style="color: #f6465d;">0.0000%</b></span>
+          <span style="color: #888;">=</span>
+          <span>Net: <b id="netFundingVal" style="color: #2ebd85;">+0.0000% APR</b></span>
+        </div>
+        <button id="openAlerts" class="btn-icon" title="Налаштувати звукові алерти">🔔</button>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-box">
+          <div class="label">ENTRY (IN)</div>
+          <div id="inVal" class="value green">0.00%</div>
+        </div>
+        <div class="metric-box">
+          <div class="label">EXIT (OUT)</div>
+          <div id="outVal" class="value red">0.00%</div>
+        </div>
+      </div>
+      <div id="chart"></div>
+    </div>
+
+    <div class="right-col card sidebar">
+      <div class="sidebar-header">
+        <h3>ТОП СПРЕДИ</h3>
+        <button id="openSettings" class="btn-mini sidebar-toggle" title="Налаштування сканера"
+          style="font-size: 18px;">⚙</button>
+        <button id="sidebarToggle" class="sidebar-toggle" title="Сховати панель">
+          <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M6 3l6 5-6 5V3z" />
+          </svg>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <table>
+          <thead>
+            <tr>
+              <th>Монета</th>
+              <th><button id="sortSpread" class="sort-btn active" title="Клікніть для сортування за спредом">Spread 🔽</button></th>
+              <th>Funding (L/S)</th>
+              <th><button id="sortNetApr" class="sort-btn" title="Клікніть для сортування за Net APR">Net APR ↕</button></th>
+            </tr>
+          </thead>
+          <tbody id="topSpreads"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content card">
+      <h3>Налаштування сканера ⚙️</h3>
+      <div class="field">
+        <label>Мінімальний спред для списку (%):</label>
+        <input type="number" id="minSpreadInput" value="0.01" step="0.01">
+      </div>
+      <div class="field">
+        <label>Відслідковувати біржі:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" id="exOndo" value="Ondo" checked> Ondo Perps</label>
+          <label><input type="checkbox" id="exRHLighter" value="RH_Lighter" checked> Robinhood Lighter</label>
+          <label><input type="checkbox" id="exVariational" value="Variational" checked> Variational Omni</label>
+          <label><input type="checkbox" id="exExtended" value="Extended" checked> Extended DEX</label>
+          <label><input type="checkbox" id="exLighter" value="Lighter" checked> Lighter DEX</label>
+          <label><input type="checkbox" id="exRiseX" value="RiseX" checked> RiseX</label>
+          <label><input type="checkbox" id="exBullet" value="Bullet" checked> Bullet DEX</label>
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button id="saveSettings" class="btn-primary">OK</button>
+        <button id="closeSettings" class="btn-secondary">Закрити</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="alertModal" class="modal">
+    <div class="modal-content card">
+      <h3>Звукові сповіщення 🔔</h3>
+      <div class="field">
+        <label>Грати звук, якщо ENTRY (IN) >= %:</label>
+        <input type="number" id="entryAlertLevel" placeholder="Вимкнено" step="0.01">
+      </div>
+      <div class="field">
+        <label>Грати звук, якщо EXIT (OUT) >= %:</label>
+        <input type="number" id="exitAlertLevel" placeholder="Вимкнено" step="0.01">
+      </div>
+      <div class="modal-buttons">
+        <button id="saveAlerts" class="btn-primary">Зберегти</button>
+        <button id="closeAlerts" class="btn-secondary">Закрити</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js?v=2500"></script>
+</body>
+
+</html>
