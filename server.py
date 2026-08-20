@@ -193,7 +193,7 @@ async def get_rh_lighter_symbols() -> Dict[str, int]:
 def get_native_ticker(ex: str, sym: str) -> str:
     if ex in ["Variational", "Bullet"] and sym == "SPY":
         return "US500"
-    if ex in ["Variational", "Bullet"] and sym == "QQQ":
+    if ex == "Variational" and sym == "QQQ":
         return "US100"
     if ex == "Ondo" and sym == "SP500_INDEX":
         return "US500"
@@ -256,9 +256,6 @@ async def get_symbols_for_exchanges(exchanges: List[str], require_all: bool = Fa
                 if "US500" in b_syms:
                     b_syms.remove("US500")
                     b_syms.add("SPY")
-                if "US100" in b_syms:
-                    b_syms.remove("US100")
-                    b_syms.add("QQQ")
                 exchange_symbols.append(b_syms)
             
             elif ex == "EXTENDET":

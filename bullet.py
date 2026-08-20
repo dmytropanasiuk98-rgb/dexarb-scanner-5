@@ -55,9 +55,7 @@ class BulletClient:
 
                         # Alias mappings for universal scanner compatibility
                         aliases = [base_sym]
-                        if base_sym == "US100":
-                            aliases.append("QQQ")
-                        elif base_sym == "US500":
+                        if base_sym == "US500":
                             aliases.append("SPY")
                         elif base_sym in ["GOLD", "XAU"]:
                             aliases.extend(["GOLD", "XAU"])
@@ -102,8 +100,6 @@ class BulletClient:
             return self.prices[sym_upper]
         if sym_upper == "GOLD" and "XAU" in self.prices:
             return self.prices["XAU"]
-        if sym_upper == "QQQ" and "US100" in self.prices:
-            return self.prices["US100"]
         if sym_upper == "SPY" and "US500" in self.prices:
             return self.prices["US500"]
         return 0.0, 0.0
@@ -115,8 +111,6 @@ class BulletClient:
             return self.funding_rates[sym_upper]
         if sym_upper == "GOLD" and "XAU" in self.funding_rates:
             return self.funding_rates["XAU"]
-        if sym_upper == "QQQ" and "US100" in self.funding_rates:
-            return self.funding_rates["US100"]
         if sym_upper == "SPY" and "US500" in self.funding_rates:
             return self.funding_rates["US500"]
         return 0.0

@@ -636,6 +636,7 @@ window.selectSymbol = (sym, longEx, shortEx) => {
         setCustomSelectValue("shortEx", shortEx);
         state.shortEx = shortEx;
     }
+    updateTradeButtons();
     updateDashboard();
 };
 
@@ -767,6 +768,64 @@ const EXCHANGE_ICONS = {
     "Bullet": "/static/images/bullet.png"
 };
 
+function getExchangeTradeUrl(ex, symbol) {
+    const s = (symbol || "BTC").toUpperCase();
+    if (ex === "Ondo") {
+        const ondoSym = (s === "SPY" || s === "SP500_INDEX") ? "US500" : s;
+        return `https://app.ondoperps.xyz/trade/perps/${ondoSym}-USD.P`;
+    } else if (ex === "RH_Lighter" || ex === "Lighter") {
+        return `https://app.lighter.xyz/trade/${s}`;
+    } else if (ex === "Variational") {
+        const vSym = (s === "SPY") ? "US500" : (s === "QQQ" ? "US100" : s);
+        return `https://omni.variational.io/perps/${vSym}`;
+    } else if (ex === "Extended" || ex === "EXTENDET") {
+        return `https://app.extended.exchange/trade/${s}-USD`;
+    } else if (ex === "RiseX") {
+        return `https://www.rise.trade/en/trade/${s}`;
+    } else if (ex === "Bullet") {
+        const bSym = (s === "SPY") ? "US500" : s;
+        return `https://app.bullet.xyz/trade/${bSym}-USD`;
+    }
+    return "#";
+}
+
+function updateTradeButtons() {
+    const longEx = $("longEx") ? $("longEx").value : "Ondo";
+    const shortEx = $("shortEx") ? $("shortEx").value : "RH_Lighter";
+    const currentSym = state.symbol || "BTC";
+
+    const entryContainer = $("entryTradeBtns");
+    const exitContainer = $("exitTradeBtns");
+
+    if (entryContainer) {
+        const longUrl = getExchangeTradeUrl(longEx, currentSym);
+        const longIcon = EXCHANGE_ICONS[longEx] || "/static/images/ondo.png";
+        const longName = EXCHANGE_NAMES[longEx] || longEx;
+
+        entryContainer.innerHTML = `
+            <a class="ex-trade-card-btn" href="${longUrl}" target="_blank" title="Перейти на торгівлю ${currentSym} на ${longName}" onclick="if(typeof playTactileClick==='function')playTactileClick();">
+                <span class="badge-card-side badge-card-long">LONG</span>
+                <img src="${longIcon}" class="big-ex-icon">
+                <span class="ex-card-title">${longName} ↗</span>
+            </a>
+        `;
+    }
+
+    if (exitContainer) {
+        const shortUrl = getExchangeTradeUrl(shortEx, currentSym);
+        const shortIcon = EXCHANGE_ICONS[shortEx] || "/static/images/lighter.png";
+        const shortName = EXCHANGE_NAMES[shortEx] || shortEx;
+
+        exitContainer.innerHTML = `
+            <a class="ex-trade-card-btn" href="${shortUrl}" target="_blank" title="Перейти на торгівлю ${currentSym} на ${shortName}" onclick="if(typeof playTactileClick==='function')playTactileClick();">
+                <span class="badge-card-side badge-card-short">SHORT</span>
+                <img src="${shortIcon}" class="big-ex-icon">
+                <span class="ex-card-title">${shortName} ↗</span>
+            </a>
+        `;
+    }
+}
+
 function setCustomSelectValue(selectId, val) {
     const isLong = selectId === "longEx";
     const textId = isLong ? "longExText" : "shortExText";
@@ -793,6 +852,7 @@ function setCustomSelectValue(selectId, val) {
             }
         });
     }
+    updateTradeButtons();
 }
 
 function initCustomSelects() {
@@ -979,6 +1039,7 @@ async function start() {
     document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
     initChart();
     initCustomSelects();
+    updateTradeButtons();
     await loadSymbols();
     await loadChartHistory();
 

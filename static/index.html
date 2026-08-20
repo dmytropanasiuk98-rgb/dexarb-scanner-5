@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <title>DEXARB Pro + Alerts</title>
   <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-  <link rel="stylesheet" href="/static/styles.css?v=2500">
+  <link rel="stylesheet" href="/static/styles.css?v=3400">
 </head>
 
 <body>
@@ -98,12 +98,18 @@
 
       <div class="metrics-row">
         <div class="metric-box">
-          <div class="label">ENTRY (IN)</div>
-          <div id="inVal" class="value green">0.00%</div>
+          <div class="trade-btns-container" id="entryTradeBtns"></div>
+          <div class="metric-info">
+            <div class="label">ENTRY (IN)</div>
+            <div id="inVal" class="value green">0.00%</div>
+          </div>
         </div>
         <div class="metric-box">
-          <div class="label">EXIT (OUT)</div>
-          <div id="outVal" class="value red">0.00%</div>
+          <div class="trade-btns-container" id="exitTradeBtns"></div>
+          <div class="metric-info">
+            <div class="label">EXIT (OUT)</div>
+            <div id="outVal" class="value red">0.00%</div>
+          </div>
         </div>
       </div>
       <div id="chart"></div>
@@ -180,7 +186,7 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=2500"></script>
+  <script src="/static/app.js?v=3400"></script>
 </body>
 
 </html>
