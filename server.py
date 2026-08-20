@@ -676,10 +676,15 @@ async def api_history(symbol: Optional[str] = None, long_ex: Optional[str] = Non
 async def api_scan_top(
     long_ex: str = "",
     short_ex: str = "",
-    min_spread: float = -100.0,
+    min_spread: str = "-100.0",
     exchanges: str = "",
     pinned_pairs: str = ""
 ):
+    try:
+        min_spread_val = float(str(min_spread).replace(",", "."))
+    except Exception:
+        min_spread_val = -100.0
+
     pinned_dict = {}  # symbol -> (long_ex, short_ex)
     if pinned_pairs:
         try:
@@ -789,7 +794,7 @@ async def api_scan_top(
                 }
                 all_vars.append(var_entry)
 
-                if spr >= min_spread and spr > best_spr:
+                if spr >= min_spread_val and spr > best_spr:
                     best_spr = spr
                     best_item = (l_ex, s_ex, spr, l_fr, s_fr)
 

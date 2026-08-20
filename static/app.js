@@ -968,7 +968,8 @@ if ($("openSettings")) $("openSettings").onclick = () => {
 };
 if ($("closeSettings")) $("closeSettings").onclick = () => $("modal").style.display = "none";
 if ($("saveSettings")) $("saveSettings").onclick = () => {
-    const minVal = parseFloat($("minSpreadInput").value);
+    const rawVal = $("minSpreadInput") ? $("minSpreadInput").value.replace(",", ".") : "-100.0";
+    const minVal = parseFloat(rawVal);
     state.minSpread = !isNaN(minVal) ? minVal : -100.0;
     
     const newEx = [];
@@ -1052,14 +1053,12 @@ async function start() {
     initChart();
     initCustomSelects();
     updateTradeButtons();
+    scan();
     await loadSymbols();
     await loadChartHistory();
 
     setInterval(poll, 500);
     setInterval(scan, 10000);
-
-    // Initial scan
-    scan();
 }
 
 // Header buttons hover & click sounds
